@@ -26,30 +26,29 @@ public class CountersTest {
         prefs.put("password_manager_enabled", false);
         options.setExperimentalOption("prefs", prefs);
         Configuration.browserCapabilities = options;
-
-        //loginPage = open("https://www.avito.ru/avito-care/eco-impact", LoginPage.class);
-        open("https://www.avito.ru/avito-care/eco-impact");
+        
+        open("https://www.avito.ru/avito-care/eco-impact"); // открытие требуемой страницы
     }
 
     @BeforeAll
     static void setupAll() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
+        SelenideLogger.addListener("allure", new AllureSelenide()); // добавление листенера Allure
     }
 
     @AfterAll
     static void tearDownAll() {
-        SelenideLogger.removeListener("allure");
+        SelenideLogger.removeListener("allure"); // удаление листенера после всех тестов
     }
 
     @Test
-    void shouldTestUnauthorizedUser() {
+    void shouldTestUnauthorizedUser() { // проверка счетчиков неавторизованного пользователя
         $(By.className("desktop-value-Nd1tR")).shouldHave(Condition.text("0"));
     }
 
     @Test
-    void shouldTestAuthorizedUser() {
-        $(By.className("desktop-button-wrapper-K8ki0")).shouldHave(Condition.text("Авторизоваться")).click();
+    void shouldTestAuthorizedUser() { // проверка счетчиков авторизованного пользователя
+        $(By.className("desktop-button-wrapper-K8ki0")).shouldHave(Condition.text("Авторизоваться")).click(); // поиск кнопки "Авторизоваться"
         sleep(2000);
-        SelenideElement authForm = $(By.className("AuthForm-login-U0tK7"));
+        SelenideElement authForm = $(By.className("AuthForm-login-U0tK7")); // проверка формы авторизации
     }
 }
